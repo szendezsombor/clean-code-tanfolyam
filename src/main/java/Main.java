@@ -13,7 +13,7 @@ public class Main {
             String line;
             line = br.readLine();
             while ((line = br.readLine()) != null) {
-                getDifference(line);
+                System.out.println(getDifference(line));
             }
         } catch (IOException exception) {
             System.out.println(exception);
@@ -32,14 +32,16 @@ public class Main {
     }
 
     int getMinValue(String[] cut) {
-        return Integer.parseInt(removeUnexpectedStarEnding(cut[2]));
+        System.out.println(cut[3]);
+        return (int) Double.parseDouble(removeUnexpectedStarEnding(cut[3]));
     }
 
     int getMaxValue(String[] cut) {
-        return Integer.parseInt(removeUnexpectedStarEnding(cut[1]));
+        System.out.println(cut[2]);
+        return (int) Double.parseDouble(removeUnexpectedStarEnding(cut[2]));
     }
 
     String removeUnexpectedStarEnding(String str) {
-        return str.replace('*', '');
+        return str.replace("*", "");
     }
 }
