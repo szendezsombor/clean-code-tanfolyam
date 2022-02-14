@@ -2,37 +2,46 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 public class DifferenceCalculator {
 
     private ValueProcessor processor;
+    private AtomicInteger difference;
+    private AtomicInteger day;
 
     public DifferenceCalculator() {
         this.processor = new ValueProcessor();
     }
 
     public int getDayOfMinimumDifference(String path) {
-        int difference = Integer.MAX_VALUE;
-        int day = Integer.MAX_VALUE;
+        resetValues();
 
         try (BufferedReader br = loadFile(path)) {
-            String line;
-            skipHeadersLineReading(br);
+            Stream<String> lines = getFileContent(br);
 
-            while ((line = br.readLine()) != null) {
-                String[] cutLine = cutLineBySpaces(line);
-                int currentDifference = processor.getMinMaxDifference(cutLine);
+            lines.forEach(this::processLine);
 
-                if (currentDifference < difference)  {
-                    difference = currentDifference;
-                    day = processor.getDay(cutLine);
-                }
-            }
         } catch (IOException exception) {
             handleFileLoadException(exception);
         }
+        return day.get();
+    }
 
-        return day;
+    private void resetValues() {
+        difference = new AtomicInteger(Integer.MAX_VALUE);
+        day = new AtomicInteger(Integer.MAX_VALUE);
+    }
+
+    private void processLine(String line) {
+        String[] cutLine = cutLineBySpaces(line);
+        int currentDifference = processor.getMinMaxDifference(cutLine);
+        if (currentDifference < difference.get())  {
+            difference.set(currentDifference);
+            day.set(processor.getDay(cutLine));
+        }
+
     }
 
     private BufferedReader loadFile(String path) throws FileNotFoundException {
@@ -43,9 +52,8 @@ public class DifferenceCalculator {
         System.out.println(exception);
     }
 
-    private void skipHeadersLineReading(BufferedReader br) throws IOException {
-        br.readLine();
-        br.readLine();
+    private Stream<String> getFileContent(BufferedReader br) throws IOException {
+        return br.lines().skip(2);
     }
 
     private String[] cutLineBySpaces(String line) {
