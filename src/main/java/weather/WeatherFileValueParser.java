@@ -1,4 +1,6 @@
-public class ValueProcessor {
+package weather;
+
+public class WeatherFileValueParser {
 
     private final int DAY_VALUE_PLACE = 1;
     private final int MIN_VALUE_PLACE = 2;
