@@ -1,26 +1,31 @@
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class DifferenceCalculator {
 
-    int DAY_VALUE_PLACE = 1;
-    int MIN_VALUE_PLACE = 2;
-    int MAX_VALUE_PLACE = 3;
+    private ValueProcessor processor;
 
-    int getDayOfMinimumDifference(String file) {
+    public DifferenceCalculator() {
+        this.processor = new ValueProcessor();
+    }
+
+    int getDayOfMinimumDifference(String path) {
         int difference = Integer.MAX_VALUE;
         int day = Integer.MAX_VALUE;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader br = loadFile(path)) {
             String line;
-            skipHeaderLineReading(br);
+            skipHeadersLineReading(br);
+
             while ((line = br.readLine()) != null) {
-                String[] cut = cutLineBySpaces(line);
-                int currentDifference = getDifference(cut);
+                String[] cutLine = cutLineBySpaces(line);
+                int currentDifference = processor.getMinMaxDifference(cutLine);
+
                 if (currentDifference < difference)  {
                     difference = currentDifference;
-                    day = getDay(cut);
+                    day = processor.getDay(cutLine);
                 }
             }
         } catch (IOException exception) {
@@ -30,40 +35,16 @@ public class DifferenceCalculator {
         return day;
     }
 
-    void skipHeaderLineReading(BufferedReader br) throws IOException {
+    BufferedReader loadFile(String path) throws FileNotFoundException {
+        return new BufferedReader(new FileReader(path));
+    }
+
+    void skipHeadersLineReading(BufferedReader br) throws IOException {
+        br.readLine();
         br.readLine();
     }
 
     String[] cutLineBySpaces(String line) {
         return line.split("\\s+");
-    }
-
-    int getDifference(String[] cut) {
-
-        int difference = Integer.MAX_VALUE;
-
-        if (cut.length > 1) difference = getMaxValue(cut) - getMinValue(cut);
-
-        return difference;
-    }
-
-    int getDay(String[] cut) {
-        return parseStrToInt(cut[DAY_VALUE_PLACE]);
-    }
-
-    int getMinValue(String[] cut) {
-        return parseStrToInt(cut[MAX_VALUE_PLACE]);
-    }
-
-    int getMaxValue(String[] cut) {
-        return parseStrToInt(cut[MIN_VALUE_PLACE]);
-    }
-
-    int parseStrToInt(String str) {
-        return (int) Double.parseDouble(removeUnexpectedStarEnding(str));
-    }
-
-    String removeUnexpectedStarEnding(String str) {
-        return str.replace("*", "");
     }
 }
