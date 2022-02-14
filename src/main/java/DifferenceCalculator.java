@@ -48,15 +48,19 @@ public class DifferenceCalculator {
     }
 
     int getDay(String[] cut) {
-        return (int) Double.parseDouble(removeUnexpectedStarEnding(cut[DAY_VALUE_PLACE]));
+        return parseStrToInt(cut[DAY_VALUE_PLACE]);
     }
 
     int getMinValue(String[] cut) {
-        return (int) Double.parseDouble(removeUnexpectedStarEnding(cut[MAX_VALUE_PLACE]));
+        return parseStrToInt(cut[MAX_VALUE_PLACE]);
     }
 
     int getMaxValue(String[] cut) {
-        return (int) Double.parseDouble(removeUnexpectedStarEnding(cut[MIN_VALUE_PLACE]));
+        return parseStrToInt(cut[MIN_VALUE_PLACE]);
+    }
+
+    int parseStrToInt(String str) {
+        return (int) Double.parseDouble(removeUnexpectedStarEnding(str));
     }
 
     String removeUnexpectedStarEnding(String str) {
