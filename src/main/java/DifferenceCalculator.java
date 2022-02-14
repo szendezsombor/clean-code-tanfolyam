@@ -4,34 +4,47 @@ import java.io.IOException;
 
 public class DifferenceCalculator {
 
-    int getMinimumDifference(String file) {
+    int getDayOfMinimumDifference(String file) {
         int difference = Integer.MAX_VALUE;
+        int day = Integer.MAX_VALUE;
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             skipHeaderLineReading(br);
             while ((line = br.readLine()) != null) {
-                int currentDifference = getDifference(line);
-                if (currentDifference < difference) difference = currentDifference;
+                String[] cut = cutLineBySpaces(line);
+                int currentDifference = getDifference(cut);
+                if (currentDifference < difference)  {
+                    difference = currentDifference;
+                    day = getDay(cut);
+                }
             }
         } catch (IOException exception) {
             System.out.println(exception);
         }
 
-        return difference;
+        return day;
     }
 
     void skipHeaderLineReading(BufferedReader br) throws IOException {
         br.readLine();
     }
 
-    int getDifference(String line) {
-        String[] cut = line.split("\\s+");
+    String[] cutLineBySpaces(String line) {
+        return line.split("\\s+");
+    }
+
+    int getDifference(String[] cut) {
+
         int difference = Integer.MAX_VALUE;
 
         if (cut.length > 1) difference = getMaxValue(cut) - getMinValue(cut);
 
         return difference;
+    }
+
+    int getDay(String[] cut) {
+        return (int) Double.parseDouble(removeUnexpectedStarEnding(cut[1]));
     }
 
     int getMinValue(String[] cut) {
