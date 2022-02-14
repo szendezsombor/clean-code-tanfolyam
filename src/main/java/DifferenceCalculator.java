@@ -6,10 +6,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 public class DifferenceCalculator {
+    private final int NUMBER_OF_HEADER_LINES = 2;
 
-    private ValueProcessor processor;
+    private final ValueProcessor processor;
     private AtomicInteger difference;
     private AtomicInteger day;
+
 
     public DifferenceCalculator() {
         this.processor = new ValueProcessor();
@@ -53,7 +55,7 @@ public class DifferenceCalculator {
     }
 
     private Stream<String> getFileContent(BufferedReader br) throws IOException {
-        return br.lines().skip(2);
+        return br.lines().skip(NUMBER_OF_HEADER_LINES);
     }
 
     private String[] cutLineBySpaces(String line) {
