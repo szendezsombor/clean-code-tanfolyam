@@ -3,7 +3,10 @@ package weather;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 public class WeatherMinMaxDifferenceCalculator {
 
@@ -29,13 +32,17 @@ public class WeatherMinMaxDifferenceCalculator {
     private void processWeatherFile(String path) {
         resetCompareValues();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            br.lines().skip(NUMBER_OF_HEADER_LINES)
-                    .filter(this::lineWithInvalidDayValue)
-                    .forEach(this::calculateDifference);
+        try (Stream<String> lines = Files.lines(Path.of(path))) {
+            findSmallest(lines);
         } catch (IOException exception) {
             System.out.println(exception);
         }
+    }
+
+    private void findSmallest(Stream<String> lines) {
+        lines.skip(NUMBER_OF_HEADER_LINES)
+                .filter(this::lineWithInvalidDayValue)
+                .forEach(this::calculateDifference);
     }
 
     private void resetCompareValues() {
