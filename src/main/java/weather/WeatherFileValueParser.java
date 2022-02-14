@@ -10,7 +10,7 @@ public class WeatherFileValueParser {
         return parseStrToInt(cut[DAY_VALUE_PLACE]);
     }
 
-    public int getMinMaxDifference(String[] cut) {
+    public int calculateMinMaxDifference(String[] cut) {
         return getMaxValue(cut) - getMinValue(cut);
     }
 

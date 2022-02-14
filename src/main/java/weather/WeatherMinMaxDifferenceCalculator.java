@@ -49,7 +49,7 @@ public class WeatherMinMaxDifferenceCalculator {
 
     private void calculateDifference(String line) {
         String[] cutLine = cutLineBySpaces(line);
-        int currentDifference = parser.getMinMaxDifference(cutLine);
+        int currentDifference = parser.calculateMinMaxDifference(cutLine);
         if (currentDifference < difference.get()) {
             difference.set(currentDifference);
             day.set(parser.getDay(cutLine));
