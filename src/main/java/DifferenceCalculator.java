@@ -11,7 +11,7 @@ public class DifferenceCalculator {
         this.processor = new ValueProcessor();
     }
 
-    int getDayOfMinimumDifference(String path) {
+    public int getDayOfMinimumDifference(String path) {
         int difference = Integer.MAX_VALUE;
         int day = Integer.MAX_VALUE;
 
@@ -29,22 +29,26 @@ public class DifferenceCalculator {
                 }
             }
         } catch (IOException exception) {
-            System.out.println(exception);
+            handleFileLoadException(exception);
         }
 
         return day;
     }
 
-    BufferedReader loadFile(String path) throws FileNotFoundException {
+    private BufferedReader loadFile(String path) throws FileNotFoundException {
         return new BufferedReader(new FileReader(path));
     }
 
-    void skipHeadersLineReading(BufferedReader br) throws IOException {
+    private void handleFileLoadException(IOException exception) {
+        System.out.println(exception);
+    }
+
+    private void skipHeadersLineReading(BufferedReader br) throws IOException {
         br.readLine();
         br.readLine();
     }
 
-    String[] cutLineBySpaces(String line) {
+    private String[] cutLineBySpaces(String line) {
         return line.split("\\s+");
     }
 }
