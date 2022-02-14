@@ -4,6 +4,10 @@ import java.io.IOException;
 
 public class DifferenceCalculator {
 
+    int DAY_VALUE_PLACE = 1;
+    int MIN_VALUE_PLACE = 2;
+    int MAX_VALUE_PLACE = 3;
+
     int getDayOfMinimumDifference(String file) {
         int difference = Integer.MAX_VALUE;
         int day = Integer.MAX_VALUE;
@@ -44,15 +48,15 @@ public class DifferenceCalculator {
     }
 
     int getDay(String[] cut) {
-        return (int) Double.parseDouble(removeUnexpectedStarEnding(cut[1]));
+        return (int) Double.parseDouble(removeUnexpectedStarEnding(cut[DAY_VALUE_PLACE]));
     }
 
     int getMinValue(String[] cut) {
-        return (int) Double.parseDouble(removeUnexpectedStarEnding(cut[3]));
+        return (int) Double.parseDouble(removeUnexpectedStarEnding(cut[MAX_VALUE_PLACE]));
     }
 
     int getMaxValue(String[] cut) {
-        return (int) Double.parseDouble(removeUnexpectedStarEnding(cut[2]));
+        return (int) Double.parseDouble(removeUnexpectedStarEnding(cut[MIN_VALUE_PLACE]));
     }
 
     String removeUnexpectedStarEnding(String str) {
