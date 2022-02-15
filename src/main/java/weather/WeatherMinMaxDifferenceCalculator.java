@@ -25,8 +25,6 @@ public class WeatherMinMaxDifferenceCalculator extends DifferenceCalculator {
     }
 
     private int sortByDifference(WeatherData w1, WeatherData w2) {
-//        System.out.println(w1.getDifference());
-//        System.out.println(w2.getDifference());
         return Integer.compare(w1.getDifference(), w2.getDifference());
     }
 
