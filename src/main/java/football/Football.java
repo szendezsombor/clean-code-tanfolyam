@@ -28,7 +28,14 @@ public class Football {
                 .forEach(this::createFootballData);
 
         return data.stream()
-                .sorted((f1, f2) -> Integer.compare(f2.getDifference(), f1.getDifference()));
+                .sorted(this::sortByScoreDifference)
+                .findFirst()
+                .get()
+                .getTeamName();
+    }
+
+    private int sortByScoreDifference(FootballData f1, FootballData f2) {
+        return Integer.compare(f1.getDifference(), f2.getDifference());
     }
 
     private boolean invalidLine(String line) {
