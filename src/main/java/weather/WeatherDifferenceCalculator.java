@@ -4,9 +4,9 @@ import base.DifferenceCalculator;
 
 import java.util.stream.Stream;
 
-public class Weather extends DifferenceCalculator {
+public class WeatherDifferenceCalculator extends DifferenceCalculator {
 
-    public Weather(String path) {
+    public WeatherDifferenceCalculator(String path) {
         super(path, 2);
     }
 
@@ -17,7 +17,7 @@ public class Weather extends DifferenceCalculator {
     private int findSmallest(Stream<String> lines) {
         return lines.skip(NUMBER_OF_HEADER_LINES)
                 .filter(this::lineWithInvalidDayValue)
-                .map(WeatherData::of)
+                .map(WeatherDifferenceData::of)
                 .sorted(this::sortByDifference)
                 .findFirst()
                 .orElseThrow()

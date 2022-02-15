@@ -2,7 +2,7 @@ package weather;
 
 import base.DifferenceData;
 
-public class WeatherData extends DifferenceData {
+public class WeatherDifferenceData extends DifferenceData {
 
     private final int DAY_VALUE_PLACE = 1;
 
@@ -16,7 +16,7 @@ public class WeatherData extends DifferenceData {
 
     private int max;
 
-    public WeatherData(String line) {
+    public WeatherDifferenceData(String line) {
         String[] cut = cutLineBySpaces(line);
 
         this.min = parseStrToInt(cut[MIN_VALUE_PLACE]);
@@ -25,8 +25,8 @@ public class WeatherData extends DifferenceData {
         this.difference = this.max - this.min;
     }
 
-    public static WeatherData of(String line) {
-        return new WeatherData(line);
+    public static WeatherDifferenceData of(String line) {
+        return new WeatherDifferenceData(line);
     }
 
     private int parseStrToInt(String str) {

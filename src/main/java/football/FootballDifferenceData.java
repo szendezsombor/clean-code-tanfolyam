@@ -2,7 +2,7 @@ package football;
 
 import base.DifferenceData;
 
-public class FootballData extends DifferenceData {
+public class FootballDifferenceData extends DifferenceData {
 
     private final int MIN_PLACE = 9;
     private final int MAX_PLACE = 7;
@@ -12,7 +12,7 @@ public class FootballData extends DifferenceData {
     private int max;
     private String teamName;
 
-    public FootballData(String line) {
+    public FootballDifferenceData(String line) {
         String[] cut = cutLineBySpaces(line);
 
         this.teamName = cut[TEAM_NAME_PLACE];
@@ -21,8 +21,8 @@ public class FootballData extends DifferenceData {
         this.difference = Math.abs(this.max - this.min);
     }
 
-    public static FootballData of(String line) {
-        return new FootballData(line);
+    public static FootballDifferenceData of(String line) {
+        return new FootballDifferenceData(line);
     }
 
     public String getTeamName() {

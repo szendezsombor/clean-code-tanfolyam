@@ -4,9 +4,9 @@ import base.DifferenceCalculator;
 
 import java.util.stream.Stream;
 
-public class Football extends DifferenceCalculator {
+public class FootballDifferenceCalculator extends DifferenceCalculator {
 
-    public Football(String path) {
+    public FootballDifferenceCalculator(String path) {
         super(path, 1);
     }
 
@@ -17,7 +17,7 @@ public class Football extends DifferenceCalculator {
     String findMinDifferenceFootballTeam(Stream<String> lines) {
         return lines.skip(NUMBER_OF_HEADER_LINES)
                 .filter(this::invalidLine)
-                .map(FootballData::of)
+                .map(FootballDifferenceData::of)
                 .sorted(this::sortByDifference)
                 .findFirst()
                 .orElseThrow()
