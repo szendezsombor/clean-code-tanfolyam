@@ -1,15 +1,14 @@
 package base;
 
-import weather.WeatherData;
-
 public class DifferenceData {
 
-    protected final int difference;
+    protected int difference;
 
-    public DifferenceData(int difference) {
-        this.difference = difference;
+    public int getDifference() {
+        return difference;
     }
 
-
-
+    protected String[] cutLineBySpaces(String line) {
+        return line.split("\\s+");
+    }
 }

@@ -1,6 +1,8 @@
 package weather;
 
-public class WeatherData {
+import base.DifferenceData;
+
+public class WeatherData extends DifferenceData {
 
     private final int DAY_VALUE_PLACE = 1;
 
@@ -14,8 +16,6 @@ public class WeatherData {
 
     private int max;
 
-    private int difference;
-
     public WeatherData(String line) {
         String[] cut = cutLineBySpaces(line);
 
@@ -26,7 +26,6 @@ public class WeatherData {
     }
 
     public static WeatherData of(String line) {
-
         return new WeatherData(line);
     }
 
@@ -38,15 +37,10 @@ public class WeatherData {
         return str.replace("*", "");
     }
 
-    private String[] cutLineBySpaces(String line) {
-        return line.split("\\s+");
-    }
+
 
     public int getDay() {
         return day;
     }
 
-    public int getDifference() {
-        return difference;
-    }
 }

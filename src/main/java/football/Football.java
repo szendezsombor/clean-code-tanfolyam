@@ -1,16 +1,13 @@
 package football;
 
-import file.FileParser;
+import base.DifferenceCalculator;
 
 import java.util.stream.Stream;
 
-public class Football {
-
-    private final int HEADER_LINES_NO = 1;
-    private final FileParser parser;
+public class Football extends DifferenceCalculator {
 
     public Football(String path) {
-        parser = new FileParser(path);
+        super(path, 1);
     }
 
     public String getFootballTeamWithMinDifference() {
@@ -18,29 +15,16 @@ public class Football {
     }
 
     String findMinDifferenceFootballTeam(Stream<String> lines) {
-        return lines.skip(HEADER_LINES_NO)
+        return lines.skip(NUMBER_OF_HEADER_LINES)
                 .filter(this::invalidLine)
-                .map(this::createFootballData)
-                .sorted(this::sortByScoreDifference)
+                .map(FootballData::of)
+                .sorted(this::sortByDifference)
                 .findFirst()
                 .orElseThrow()
                 .getTeamName();
-
-    }
-
-    private int sortByScoreDifference(FootballData f1, FootballData f2) {
-        return Integer.compare(f1.getDifference(), f2.getDifference());
     }
 
     private boolean invalidLine(String line) {
         return !line.contains("-------");
-    }
-
-    private FootballData createFootballData(String line) {
-        return new FootballData(cutLineBySpaces(line));
-    }
-
-    private String[] cutLineBySpaces(String line) {
-        return line.split("\\s+");
     }
 }
